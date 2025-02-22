@@ -4,7 +4,7 @@ from fastapi import FastAPI, Depends
 from pydantic import BaseModel
 from datetime import datetime
 from uuid import uuid4
-from dateutil import parser
+# from dateutil import parser
 from sqlalchemy.orm import Session
 from openai import OpenAI  
 from pydantic import BaseModel
