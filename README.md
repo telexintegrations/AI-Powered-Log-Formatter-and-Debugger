@@ -25,12 +25,14 @@ POST /telex/logs
 #### **Request Body**
 ```json
 {
-  "message": "Database connection failed: timeout error",
+  "message": "Application error: Database connection failed",
   "settings": [
-    { "label": "Enable AI Analysis", "value": "Yes" },
-    { "label": "Send Alerts to Slack", "value": "Yes" }
+    {"label": "Enable AI Analysis", "value": "Yes"},
+    {"label": "Send Alerts to Slack", "value": "Yes"},
+    {"label": "Send Alerts to Telex", "value": "Yes"} 
   ]
 }
+
 ```
 #### **Response**
 ```json
@@ -51,7 +53,7 @@ cd AI-Powered-Log-Formatter-and-Debugger
 ### **2️⃣ Create a Virtual Environment & Install Dependencies**
 ```bash
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+source venv/bin/activate  
 pip install -r requirements.txt
 ```
 ### **3️⃣ Set Up Environment Variables**

@@ -1,13 +1,12 @@
 import httpx
 import json
-from fastapi import FastAPI, Request, Depends
+from fastapi import FastAPI, Depends
 from pydantic import BaseModel
 from datetime import datetime
 from uuid import uuid4
 from dateutil import parser
 from sqlalchemy.orm import Session
-from openai import OpenAI  # If using OpenAI for AI analysis
-# from database import get_db  # Your DB session handler
+from openai import OpenAI  
 from pydantic import BaseModel
 from sqlalchemy import create_engine, Column, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
@@ -22,7 +21,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://telex.im", "https://*.telex.im", "http://telextest.im", "http://staging.telextest.im"],  # ✅ Fixed syntax
+    allow_origins=["https://telex.im", "https://*.telex.im", "http://telextest.im", "http://staging.telextest.im"], 
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -117,7 +116,7 @@ async def send_to_slack(log_data: dict):
 
 
 async def send_to_telex(log_data: dict):
-    """Send log details to Slack."""
+    """Send log details to Telex."""
     if not TELEX_WEBHOOK_URL:
         print("TELEX_WEBHOOK_URL is not set.")
         return
@@ -125,18 +124,23 @@ async def send_to_telex(log_data: dict):
     message = f"🔴 *{log_data['level']}* - {log_data['source']}\n📅 *Time:* {log_data['timestamp']}\n📝 *Message:* {log_data['message']}"
     # payload = {"text": message}
     payload = {
-    "event_name": "Applicaion Log",
+    "event_name": "Application Log",
     "message": message,
     "status": "error",
     "username": "Breeze"
-}
+    }
+    headers = {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "User-Agent": "TelexClient/1.0"
+    }
 
     async with httpx.AsyncClient() as client:
-        response = await client.post(TELEX_WEBHOOK_URL, json=payload, headers={
-        "Accept": "application/json",
-        "Content-Type": "application/json"
-    })
-        if response.status_code == 200:
+        response = await client.post(TELEX_WEBHOOK_URL, json=payload, headers=headers)
+        print(f"📡 Sent to Telex: {payload}")  # Debug request
+        print(f"🛠️ Response Status: {response.status_code}")
+        print(f"🔍 Response Text: {response.text}")  # Print response content
+        if response.status_code in [200, 202]:
             print("✅ Log sent to Slack successfully.")
         else:
             print(f"⚠️ Failed to send log: {response.status_code} - {response.text}")
@@ -152,6 +156,9 @@ async def process_telex_log(log: TelexLog, db: Session = Depends(get_db)):
     enable_ai = settings_dict.get("Enable AI Analysis", "No") == "Yes"
     send_slack = settings_dict.get("Send Alerts to Slack", "No") == "Yes"
     send_telex = settings_dict.get("Send Alerts to Telex", "No") == "Yes"
+
+    print(f"🔍 Extracted settings: {settings_dict}")  # Debugging settings
+    print(f"🛠 send_slack: {send_slack}, send_telex: {send_telex}, enable_ai: {enable_ai}")
 
     # Categorize log
     category = "INFO"
@@ -182,21 +189,25 @@ async def process_telex_log(log: TelexLog, db: Session = Depends(get_db)):
 
     # Send to Slack if enabled
     if send_slack:
+        print("✅ Sending log to Slack...")
         await send_to_slack({
             "level": category,
             "source": "Telex",
             "timestamp": db_log.timestamp.isoformat(),
             "message": log.message
         })
+        print("✅ Sent to Slack!")
 
     # Send to Telex if enabled
     if send_telex:
+        print("✅ Sending log to Telex...")
         await send_to_telex({
             "level": category,
             "source": "Telex",
             "timestamp": db_log.timestamp.isoformat(),
             "message": log.message
         })
+        print("✅ Sent to Telex!")
 
     # Return processed log
     return {
