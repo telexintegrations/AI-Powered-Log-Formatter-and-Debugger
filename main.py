@@ -13,6 +13,8 @@ from sqlalchemy import create_engine, Column, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, Session
 import os
+import json
+from pathlib import Path
 
 app = FastAPI()
 
@@ -193,6 +195,20 @@ async def process_telex_log(log: TelexLog, db: Session = Depends(get_db)):
         "ai_suggestion": ai_suggestion or "No AI analysis performed.",
         "processed_at": db_log.processed_at.isoformat()
     }
+
+
+
+# Load JSON from file
+def load_json():
+    json_path = Path("spec.json")  # Ensure this is the correct path
+    if json_path.exists():
+        with open(json_path, "r", encoding="utf-8") as file:
+            return json.load(file)
+    return {"error": "JSON file not found"}
+
+@app.get("/telex.json")
+async def get_telex():
+    return load_json()
 
 
 if __name__ == "__main__":

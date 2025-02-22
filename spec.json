@@ -1,0 +1,59 @@
+{
+    "data": {
+      "date": {
+        "created_at": "2025-02-21",
+        "updated_at": "2025-02-21"
+      },
+      "descriptions": {
+        "app_name": "AI Log Analyzer",
+        "app_description": "An AI-powered log analysis integration that categorizes logs, detects errors, and provides suggested fixes.",
+        "app_logo": "https://img.freepik.com/free-vector/artificial-intelligence-vector-symbol-illustration-isolated-white-background_8130-2310.jpg?semt=ais_hybrid",
+        "app_url": "https://ai-powered-log-formatter-and-debugger.onrender.com",
+        "background_color": "#FF5733"
+      },
+      "integration_category": "Monitoring & Logging",
+      "integration_type": "modifier",
+      "is_active": true,
+      "key_features": [
+        "Real-time log analysis",
+        "AI-generated error explanations and fixes",
+        "Slack integration for alerts",
+        "Categorization of logs into INFO, WARNING, ERROR"
+      ],
+      "permissions": {
+        "monitoring_user": {
+          "always_online": true,
+          "display_name": "AI Log Monitor"
+        }
+      },
+      "settings": [
+        {
+          "label": "Enable AI Analysis",
+          "type": "checkbox",
+          "required": true,
+          "default": "Yes"
+        },
+        {
+          "label": "AI Model Type",
+          "type": "dropdown",
+          "required": true,
+          "default": "OpenAI GPT-4",
+          "options": ["OpenAI GPT-4", "Hugging Face Model", "Self-hosted LLM"]
+        },
+        {
+          "label": "Send Alerts to Slack",
+          "type": "checkbox",
+          "required": false,
+          "default": "Yes"
+        },
+        {
+          "label": "Slack Webhook URL",
+          "type": "text",
+          "required": false,
+          "default": "https://hooks.slack.com/services/..."
+        }
+      ],
+      "target_url": "https://ai-powered-log-formatter-and-debugger.onrender.com/telex/logs"
+    }
+  }
+  
