@@ -5,13 +5,13 @@
 
 ## 🚀 Features
 - **Real-time Log Processing**: Captures and analyzes logs as they are received.
-- **AI-Powered Error Analysis**: Uses AI models (OpenAI GPT-4, Hugging Face, or Self-hosted LLM) to detect errors and suggest fixes.
+- **AI-Powered Error Analysis**: Uses AI models OpenAI GPT-4 to detect errors and suggest fixes.
 - **Log Categorization**: Automatically classifies logs into `INFO`, `WARNING`, and `ERROR`.
 - **Slack Integration**: Sends alerts to Slack channels for quick issue resolution.
 - **Database Storage**: Logs are stored for historical analysis and debugging.
 
 ## 🏗️ Architecture
-1. **Receives logs** from Telex (or other sources).
+1. **Receives logs** from Telex.
 2. **Categorizes logs** into INFO, WARNING, or ERROR.
 3. If enabled, **AI analyzes errors** and suggests solutions.
 4. Optionally **sends alerts to Slack** for critical logs.
@@ -45,8 +45,8 @@ POST /telex/logs
 ## 🔧 Installation & Setup
 ### **1️⃣ Clone the Repository**
 ```bash
-git clone https://github.com/your-username/ai-log-analyzer.git
-cd ai-log-analyzer
+git clone https://github.com/telexintegrations/AI-Powered-Log-Formatter-and-Debugger.git
+cd AI-Powered-Log-Formatter-and-Debugger
 ```
 ### **2️⃣ Create a Virtual Environment & Install Dependencies**
 ```bash
@@ -58,7 +58,7 @@ pip install -r requirements.txt
 Create a `.env` file and configure:
 ```env
 SLACK_WEBHOOK_URL=https://hooks.slack.com/services/...
-AI_MODEL_TYPE=OpenAI_GPT-4  # Options: OpenAI_GPT-4, Hugging_Face, Self_Hosted_LLM
+AI_MODEL_TYPE=OpenAI_GPT-4 
 DATABASE_URL=postgresql://user:password@localhost/logs_db
 ```
 ### **4️⃣ Run the FastAPI Server**
@@ -81,14 +81,13 @@ To deploy on a cloud provider (e.g., **AWS, GCP, DigitalOcean, Render**):
 ## 🛠️ Technologies Used
 - **FastAPI** - Backend API framework
 - **PostgreSQL** - Log storage database
-- **OpenAI GPT-4 / Hugging Face** - AI-powered log analysis
+- **OpenAI GPT-4** - AI-powered log analysis
 - **Slack API** - Log alert notifications
 - **Docker** - Containerization
 - **Telex** - Log streaming and event handling
 
 ## 👥 Contributors
-- **[Your Name](https://github.com/breezeconcept)** - Lead Developer
-- **Other Contributors** - Feel free to add your name!
+- **[Breeze Concept](https://github.com/breezeconcept)** - Lead Developer
 
 ## 📄 License
 This project is licensed under the **MIT License**. See [LICENSE](LICENSE) for more details.
