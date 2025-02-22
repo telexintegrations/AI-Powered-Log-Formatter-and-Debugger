@@ -15,8 +15,18 @@ from sqlalchemy.orm import sessionmaker, Session
 import os
 import json
 from pathlib import Path
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["https://telex.im", "https://*.telex.im", "http://telextest.im", "http://staging.telextest.im"],  # ✅ Fixed syntax
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Config
 DATABASE_URL = os.getenv("DATABASE_URL")
