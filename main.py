@@ -193,3 +193,10 @@ async def process_telex_log(log: TelexLog, db: Session = Depends(get_db)):
         "ai_suggestion": ai_suggestion or "No AI analysis performed.",
         "processed_at": db_log.processed_at.isoformat()
     }
+
+
+if __name__ == "__main__":
+    import uvicorn
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run(app, host="0.0.0.0", port=port, log_level="info")
+
