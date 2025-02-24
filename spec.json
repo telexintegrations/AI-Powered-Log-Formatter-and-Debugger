@@ -53,7 +53,7 @@
           "default": "https://hooks.slack.com/services/..."
         }
       ],
-      "target_url": "https://ai-powered-log-formatter-and-debugger.onrender.com/telex/logs"
+      "target_url": "https://ai-powered-log-formatter-and-debugger.onrender.com/telex/logs",
 	  "tick_url": "https://ai-powered-log-formatter-and-debugger.onrender.com/telex/logs",
 	  "website": "https://telex.im"
     }
